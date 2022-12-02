@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="product-content">
+    <div class="product-border">
+        <div class="product-image">
+            <a href="{{ product_link }}"  target="_blank"> 
+                <img src="{{ url_for('display_image', filename=product_id) }}" alt="keyboard"> 
+            </a>
+        </div>
+        <div class="product-description" id="{{ product_id }}"> 
+            <div class="product-title">
+                <h1> {{ product_name }} </h1>
+                <a href="{{ product_link }} " target="_blank">
+                    <div class="product-link">
+                        Check Site
+                    </div>
+                </a>
+            </div>
+            <div class="product-details">
+                <div class="product-section"> 
+                    <h2> Color +</h2>
+                    <div>
+                        {% if not product.color == 1 %}
+                            <select class="custom-select" >
+                                    <option> Detail in site </option>
+                            </select>
+                        {% else %}
+                            <select class="custom-select" >
+                                <option> Not Available  </option>
+                            </select>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="product-section"> 
+                    <h2> Specifications +</h2>
+                    <hr class="new-line">
+                    <div>
+                        <ul>
+                            <li> Price: ${{ "%0.2f" | format(product.price) }} </li>
+                            <li> Type: {{ product.type }} </li>
+                            {% if product.material == 'Unknown'%}
+                                <li> Material: {{ product.material }} </li>
+                            {% else %}
+                                <li> Material: -- </li>
+                            {% endif %}
+                            {% if product.size != 'Unknown'%}
+                                <li> Sizing: {{ product.size }} </li>
+                            {% else %}
+                                <li> Sizing: -- </li>     
+                            {% endif %}
+                            {% if product.brand != 'Unknown'%}
+                                <li> Brand: {{ product.brand }} </li>
+                            {% else %}
+                                <li> Brand: -- </li>     
+                            {% endif %}  
+                            {% if product.mount != 'Unknown'%}
+                                <li> Mount: {{ product.mount }} </li>
+                            {% else %}
+                                <li> Mount: -- </li>     
+                            {% endif %}
+                            {% if product.switch_type != 'Unknown'%}
+                                <li> Switch Type: {{ product.switch_type }} </li>
+                            {% else %}
+                                <li> Switch Type: -- </li>     
+                            {% endif %}    
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br> <br>
+    <div class="comment-section">
+        <h1> Comments </h1>
+        <form method="POST" action="{{ update_comment }}">
+            {{ form.hidden_tag() }}
+            <article class="media content-section">
+                <div class="media-body">
+                    {{ form.comment(class="reply-section") }} <br>
+            
+                    {{ form.submit(class="btn-submit") }}
+                </div>
+            </article>
+        </form>
+        
+        {% for user_row in users %}
+            <br>
+            <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                <a class="mr-2" href="{{ url_for('user_view', user_name=user_row['users_name']) }}">{{ user_row['users_name'] }}</a>
+                <small class="text-muted">{{ user_row['type_of_text'] }} : {{ user_row['p_post_date'] }}</small>
+                </div>
+                <p class="article-content">{{ user_row['p_text'] }}</p>
+            </div>
+            </article>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

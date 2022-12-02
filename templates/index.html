@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content_style %}
+<style>
+  body {
+      background-image: url('/static/images/bg-keyboard.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+      background-color: black;
+  }
+</style>
+{% endblock content_style %}
+
+{% block content %}
+<div class="main-content">
+  <h4>
+      Custom keyboard Builder
+  </h4>
+  <h1>
+      Build your Keyboard today
+  </h1>
+  <p>
+      Turn hours of researching and scrolling through endless <br>
+      websites for your next keyboard build into minutes with this <br>
+      easy to use keyboard builder.
+  </p>
+  
+  <a class="link-pointer" href="{{ url_for('build') }}">
+    <button type="button">GO TO Builder</button>
+  </a>
+
+</div>
+{% endblock content %}

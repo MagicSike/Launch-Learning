@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="community">
+    <div class="flex-content">
+        <div class="flex-col">
+            <div class="user-post">
+                <div class="sidebar-nav">
+                    <ul class="post-options">
+                        <li>
+                            <a href="{{ url_for('reply_like', community_id=post.post_id) }}"> 
+                                <img src="{{ url_for('static', filename='images/icons/like.png') }}" alt="user-picture">
+                            </a>
+                        </li>
+                        <li>
+                            {{ post.upvotes }}
+                        </li>
+                        <li>
+                            <a href="{{ url_for('reply_dislike', community_id=post.post_id) }}"> 
+                                <img src="{{ url_for('static', filename='images/icons/dislike.png') }}" alt="post-creation">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="post-content">
+                    <div class="user-link">
+                        {% if post.user_pic %}
+                            <img class="user-icon_small" src="{{ url_for('download_file', name=post.user_pic) }}" alt="user-picture">
+                        {% else %}
+                            <img class="user-icon_small_white" src="{{ url_for('static', filename='images/icons/user-icon.png') }}" alt="user-picture">
+                        {% endif %}
+                        Posted by: <a href="{{ post.profile_link }}"> {{ post.name }} </a> {{ post.time_stamp }}
+                    </div>
+                    <div class="post-title">
+                        {{ post.title }}
+                    </div>
+                        {% if post.is_image %}
+                        <div class="user-content_single_img">
+                            <img src="{{ url_for('download_file', name=post.content) }}" alt="post-creation">
+                        </div>
+                        {% else %}
+                        <div class="user-content_single">
+                            {{ post.content }}
+                        </div>
+                        {% endif %}
+
+                    <div class="post-reply">
+                        <div class="post-reply-content">
+                            <form method="POST" action="{{ url_for('reply', community_id=community_id)}}">
+                                {{ form.hidden_tag() }}
+                                {{ form.replyText(class='reply-field') }}
+                                <div class="sumbit-reply">
+                                    {{ form.reply(class='btn-reply') }}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    {% for reply in replies %}
+                    <div class="reply-content">
+                        <div class="user-link">
+                            {% if reply.user_pic %}
+                                <img class="user-icon_small" src="{{ url_for('download_file', name=reply.user_pic) }}" alt="user-picture">
+                            {% else %}
+                                <img class="user-icon_small_white" src="{{ url_for('static',  filename='images/icons/user-icon.png') }}" alt="user-picture">
+                            {% endif %}
+                            Replied by: <a href="{{ reply.profile_link }}"> {{ reply.name }} </a> {{ reply.time_stamp }}
+                        </div>
+                        <div class="reply-user-content">
+                            {% if reply.is_image %}
+                                <img src="{{ reply.reply_content }}" alt="post-creation">
+                            {% else %}
+                               {{ reply.reply_content }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

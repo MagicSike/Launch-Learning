@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="saved-builds">
+    <div class="lg-header">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="flex-content">
+        {% for count, build in zip (total_count, all_builds) %}
+            <div class="flex-row">
+                <div class="saved-product">
+                    <div class="saved-name">
+                        Build #{{ count }}
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('item_number', product_id=build['cases_id']) }}">
+                                <img src="{{ url_for('display_image', filename=build['cases_id']) }}" alt="result-image">
+                            </a>
+                            Cases
+                        </li>
+                        <li>
+                            <a href="{{ url_for('item_number', product_id=build['pcb_id']) }}">
+                                <img src="{{ url_for('display_image', filename=build['pcb_id']) }}" alt="result-image">
+                            </a>
+                            PCB
+                        </li>
+                        <li>
+                            <a href="{{ url_for('item_number', product_id=build['plates_id']) }}">
+                                <img src="{{ url_for('display_image', filename=build['plates_id']) }}" alt="result-image">
+                            </a>
+                            Plates
+                        </li>
+                        <li>
+                            <a href="{{ url_for('item_number', product_id=build['switches_id']) }}">
+                                <img src="{{ url_for('display_image', filename=build['switches_id']) }}" alt="result-image">
+                            </a>
+                            Switches
+                        </li>
+                        <li>
+                            <a href="{{ url_for('item_number', product_id=build['keycaps_id']) }}">
+                                <img src="{{ url_for('display_image', filename=build['keycaps_id']) }}" alt="result-image">
+                            </a>
+                            Keycaps
+                        </li>
+                    </ul>
+                    <form method="POST" action="{{ url_for('add_to_builder', build_id=build['build_id']) }}" >
+                        <div class="flex-row">
+                            <button type="submit" class="btn-add"> add to builder </button>
+                            <button type="submit" formaction="{{ url_for('remove_builder', build_id=build['build_id']) }}" class="btn-add"> remove </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

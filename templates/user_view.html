@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="user-view">
+    <div class="user-view-profile">
+        <div class="user-view-picture">
+            {% if user_info['profile_pic_name'] %}
+                <img class="user-icon_white" src="{{ url_for('download_file', name=user_info['profile_pic_name']) }}" alt="user-picture">
+            {% else %}
+                <img class="user-icon" src="{{ url_for('static', filename='images/icons/user-icon.png') }}" alt="user-picture">
+            {% endif %}
+        </div>
+        <div class="user-view-description">
+            <div class="user-view-name">{{ user_info['users_name'] }}</div>
+            <div class="user-view-email">{{ user_info['user_email'] }}</div>
+            <div class="user-view-posts">Posts: {{ post_count }}</div>
+            {% if user_info['profile_description'] %}
+                <div class="user-view-about">
+                    {{ user_info['profile_description'] }}
+                </div>
+            {% else %}
+                <div class="user-view-about">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

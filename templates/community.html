@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="community">
+    <div class="lg-header">
+        <h1>COMMUNITY</h1>
+    </div>
+    <div class="create-post">
+        <div id="user-entry" class="create-entry">
+            {% if login %}
+                {% if user_pic %}
+                    <a href="{{ url_for('user_view', user_name=users_name) }}"> 
+                        <img class="user-icon" src="{{ url_for('download_file', name=user_pic) }}" alt="user-picture">
+                    </a>
+                {% else %}
+                    <img class="user-icon" src="{{ url_for('static', filename='images/icons/user-icon.png') }}" alt="user-picture">
+                {% endif %}
+                <img onclick="show_post()" class="user-icon_hover" src="{{ url_for('static', filename='images/icons/post.png') }}" alt="post-creation">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/icons/user-icon.png') }}" alt="user-picture">
+                <img class="user-icon_hover" onclick="alert('Please login to post')" src="{{ url_for('static', filename='images/icons/post.png') }}" alt="post-creation">
+            {% endif %}
+        </div>
+    </div>
+    {% if login %}
+        <div class="post-form">
+            <form method="POST" action="{{ url_for('community')}}">
+                {{ form.hidden_tag() }}
+                <div id="show-text" class="create-post-popup">
+                    <div class="edit-title">
+                        {{ form.title(class='title-borderless') }}
+                    </div>
+                    <hr>
+                    {{ form.text(class='post-edit') }}
+
+                    <div class="submit-post">
+                        <img src="{{ url_for('static', filename='images/icons/image-upload.png') }}" onclick="toggleInput('show-picture')" alt="upload">
+                        {{ form.post(class='btn-post') }}
+                    </div>
+                </div>   
+            </form>
+        </div>
+
+        <div class="post-form">
+            <form method="POST" enctype=multipart/form-data action="{{ url_for('community')}}">
+                {{ upload_form.hidden_tag() }}
+                <div id="show-picture" class="create-post-popup">
+                    <div class="edit-title">
+                        <div class="title-borderless">
+                            {{ upload_form.title(class='title-borderless') }}
+                        </div>
+                    </div>
+                    <hr>
+                    {{ upload_form.file(class='post-edit') }}
+
+                    <div class="submit-post">
+                        <img src="{{ url_for('static', filename='images/icons/image-upload.png') }}" onclick="toggleInput('show-text')" alt="upload" >
+                        {{ upload_form.post(class='btn-post') }}
+                    </div>
+                </div>   
+            </form>
+        </div>
+    {% endif %}
+    <div class="flex-content">
+        <div class="flex-col">
+            {% for post in posts %}
+                <div class="user-post">
+                    <div class="sidebar-nav">
+                        <ul class="post-options">
+                            <li>
+                                <a href="{{ url_for('like', community_id=post.post_id) }}"> 
+                                    <img src="{{ url_for('static', filename='images/icons/like.png') }}" alt="user-picture">
+                                </a>
+                            </li>
+                            <li> {{ post.upvotes }} </li>
+                            <li>
+                                <a href="{{ url_for('dislike', community_id=post.post_id) }}"> 
+                                    <img src="{{ url_for('static', filename='images/icons/dislike.png') }}" alt="post-creation">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('reply', community_id=post.post_id) }}"> 
+                                    <img src="{{ url_for('static', filename='images/icons/reply.png') }}" alt="post-creation">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="post-content">
+                        <div class="user-link">
+                            {% if post.user_pic %}
+                                <img class="user-icon_small" src="{{ url_for('download_file', name=post.user_pic) }}" alt="user-picture">
+                            {% else %}
+                                <img class="user-icon_small_white" src="{{ url_for('static', filename='images/icons/user-icon.png') }}" alt="user-picture">
+                            {% endif %}
+                            Posted by: <a href="{{ post.profile_link }}"> {{ post.name }} </a> {{ post.time_stamp }}
+                        </div>
+                        <div class="post-title">
+                            <a href="{{ url_for('reply', community_id=post.post_id) }}"> 
+                                {{ post.title }}
+                            </a>
+                        </div>
+                        {% if post.is_image %}
+                        <div class="user-content_img">
+                            <img src="{{ url_for('download_file', name=post.content) }}" alt="post-creation">
+                        </div>
+                        {% else %}
+                        <div class="user-content">
+                            {{ post.content }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function show_post(){
+        var show = document.getElementById('show-text');
+        
+        if (show.style.display == "block")
+            show.style.display = "none";
+        else
+            show.style.display = "block";
+        
+    }
+</script>
+
+<script>
+    function toggleInput(id)
+    {
+        document.querySelectorAll(".create-post-popup").forEach(function(div) {
+            if (div.id == id) {
+                // Toggle specified DIV
+                div.style.display = "block";
+            } else {
+                // Hide other DIVs
+                div.style.display = "none";
+            }
+        });
+    }
+
+</script>
+{% endblock content %}

@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="builder">
+    <div class="lg-header">
+        <h1>Builder</h1>
+    </div>
+
+    <div class="flex-content">
+        <div class="flex-text">
+            CHOOSE YOUR COMPONENTS
+        </div>
+        <div class="flex-text-reverse">
+            <a href="{{ url_for('build_clear') }}">
+                <button class="btn-blue">Clear</button>
+            </a>
+            <a href="{{ url_for('build_save') }}">
+                <button class="btn-blue">Save</button>
+            </a>
+        </div>
+        <div class="build-summary">
+            Total: ${{ total }}
+            {% if comp %}
+                <span class="builder-error">
+                    *Caution: potential sizing problem between {{ comp }} *
+                </span>
+            {% endif %}      
+        </div>
+        <div class="flex-col">
+            {% if products_detail[0].id %}
+                <a href="{{ url_for('select', part_name='Cases') }}">
+                    <img src="{{ url_for('display_image', filename=products_detail[0].id) }}" height="280px" width="280px" alt="case">
+                </a> 
+                <ul>
+                    <li> Name: {{ products_detail[0].name }} </li>
+                    <li>Category: Cases</li>
+                    <li> Price: ${{ "%0.2f" | format(products_detail[0].price) }} </li>
+                    {% if products_detail[0].size != 'Unknown'%}
+                        <li> Size: {{ products_detail[0].size }} </li>
+                    {% else %}
+                        <li> Size: -- </li>
+                    {% endif %}
+                </ul>
+            {% else %}
+                <a href="{{ url_for('select', part_name='Cases') }}">
+                    <img src="{{ url_for('static', filename='images/builder-icons/Case.png') }}" alt="case">
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="flex-col">
+            {% if products_detail[1].id %}
+                <a href="{{ url_for('select', part_name='PCB') }}">
+                    <img src="{{ url_for('display_image', filename=products_detail[1].id) }}" height="280px" width="280px" alt="case">
+                </a> 
+                <ul>
+                    <li> Name: {{ products_detail[1].name }} </li>
+                    <li>Category: PCB</li>
+                    <li> Price: ${{ "%0.2f" | format(products_detail[1].price) }} </li>
+                    {% if products_detail[1].size != 'Unknown'%}
+                        <li> Size: {{ products_detail[1].size }} </li>
+                    {% else %}
+                        <li> Size: -- </li>
+                    {% endif %}
+                </ul>
+            {% else %}
+                <a href="{{ url_for('select', part_name='PCB') }}">
+                    <img src="{{ url_for('static', filename='images/builder-icons/PCB.png') }}" alt="case">
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="flex-col">
+            {% if products_detail[2].id %}
+                <a href="{{ url_for('select', part_name='Plates') }}">
+                    <img src="{{ url_for('display_image', filename=products_detail[2].id) }}" height="280px" width="280px" alt="case">
+                </a> 
+                <ul>
+                    <li> Name: {{ products_detail[2].name }} </li>
+                    <li>Category: Plates</li>
+                    <li> Price: ${{ "%0.2f" | format(products_detail[2].price) }} </li>
+                    {% if products_detail[2].size != 'Unknown'%}
+                        <li> Size: {{ products_detail[2].size }} </li>
+                    {% else %}
+                        <li> Size: -- </li>
+                    {% endif %}
+                </ul>
+            {% else %}
+                <a href="{{ url_for('select', part_name='Plates') }}">
+                    <img src="{{ url_for('static', filename='images/builder-icons/Plate.png') }}" alt="case">
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="flex-col">
+            {% if products_detail[3].id %}
+                <a href="{{ url_for('select', part_name='Switches') }}">
+                    <img src="{{ url_for('display_image', filename=products_detail[3].id) }}" height="280px" width="280px" alt="case">
+                </a> 
+                <ul>
+                    <li> Name: {{ products_detail[3].name }} </li>
+                    <li>Category: Switches</li>
+                    <li> Price: ${{ "%0.2f" | format(products_detail[3].price) }} </li>
+                </ul>
+            {% else %}
+                <a href="{{ url_for('select', part_name='Switches') }}">
+                    <img src="{{ url_for('static', filename='images/builder-icons/Switches.png') }}" alt="case">
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="flex-col">
+            {% if products_detail[4].id %}
+                <a href="{{ url_for('select', part_name='Keycaps') }}">
+                    <img src="{{ url_for('display_image', filename=products_detail[4].id) }}" height="280px" width="280px" alt="case">
+                </a> 
+                <ul>
+                    <li> Name: {{ products_detail[4].name }} </li>
+                    <li>Category: Keycaps</li>
+                    <li> Price: ${{ "%0.2f" | format(products_detail[4].price) }} </li>
+                </ul>
+            {% else %}
+                <a href="{{ url_for('select', part_name='Keycaps') }}">
+                    <img src="{{ url_for('static', filename='images/builder-icons/Keycaps.png') }}" alt="case">
+                </a>
+            {% endif %}
+        </div>                                
+    </div>
+</div>
+{% endblock content %}

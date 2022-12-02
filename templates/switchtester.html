@@ -1,0 +1,183 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="switch-tester">
+    <div class="lg-header">
+        <h1>Switch Tester</h1>
+    </div>
+    <div class="flex-content">
+        <div class="reminder">
+            *Headphones RECOMMENDED for better audio*
+        </div>
+        <p style="padding: 0 5em 5em 0"></p>
+
+        <select name="switches" id="switches" onchange="autoSubmit()">
+            <option value="black_ink">Black Inks</option>
+            <option value="banana_split">Banana Splits</option>
+            <option value="boba_linear">Boba (Linear)</option>
+            <option value="boba">Boba</option>
+            <option value="cream">Creams</option>
+            <option value="creamsicle">Creamsicles</option>
+            <option value="gateron_yellow">Gateron Yellows</option>
+            <option value="l7">L7</option>
+            <option value="lavender">Lavenders</option>
+            <option value="lilac">Lilac</option>
+            <option value="seal">Seals</option>
+            <option value="silk_yellow">Silk Yellows</option>
+            <option value="spstar_gray">Spstar Gray</option>
+            <option value="tangerine">Tangerines</option>
+            <option value="tealios">TealiosV2</option>
+        </select>
+
+        <form action="{{url_for( 'switchtesterviewall') }}">
+            <button class="btn-switch" type="submit"> 
+                Check all at once
+            </button>
+        </form>
+
+        <audio id="black_ink">
+                <source src="{{url_for('static', filename='audio/black inks.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="banana_split">
+                <source src="{{url_for('static', filename='audio/bnnasplits.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="boba_linear">
+                <source src="{{url_for('static', filename='audio/boba linears.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="boba">
+                <source src="{{url_for('static', filename='audio/bobas.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="cream">
+                <source src="{{url_for('static', filename='audio/creams.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="creamsicle">
+                <source src="{{url_for('static', filename='audio/creamsicles.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="gateron_yellow">
+                <source src="{{url_for('static', filename='audio/gat yellows.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="l7">
+                <source src="{{url_for('static', filename='audio/L7.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="lavender">
+                <source src="{{url_for('static', filename='audio/lavenders.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="lilac">
+                <source src="{{url_for('static', filename='audio/lilac.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="seal">
+                <source src="{{url_for('static', filename='audio/seals.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="silk_yellow">
+                <source src="{{url_for('static', filename='audio/silk yellows.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="spstar_gray">
+            <source src="{{url_for('static', filename='audio/spstar gray.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="tangerine">
+                <source src="{{url_for('static', filename='audio/tangerines.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="tealios">
+                <source src="{{url_for('static', filename='audio/tealiosv2.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <button class="button-85" onclick="autoSubmit()">Button 85</button>
+    </div>
+
+    <script>
+        var audio1 = document.getElementById("black_ink");
+        var audio2 = document.getElementById("banana_split");
+        var audio3 = document.getElementById("boba_linear");
+        var audio4 = document.getElementById("boba");
+        var audio5 = document.getElementById("cream");
+        var audio6 = document.getElementById("creamsicle");
+        var audio7 = document.getElementById("gateron_yellow");
+        var audio8 = document.getElementById("l7");
+        var audio9 = document.getElementById("lavender");
+        var audio10 = document.getElementById("lilac");
+        var audio11 = document.getElementById("seal");
+        var audio12 = document.getElementById("silk_yellow");
+        var audio13 = document.getElementById("spstar_gray");
+        var audio14 = document.getElementById("tangerine");
+        var audio15 = document.getElementById("tealios");
+
+        function autoSubmit(){
+            var x = document.getElementById("switches").value;
+            if(x == "black_ink"){
+                audio1.currentTime= 0;
+                audio1.play();
+            }
+            else if(x =="banana_split"){
+                audio2.currentTime = 0;
+                audio2.play();
+            }
+            else if(x =="boba_linear"){
+                audio3.currentTime = 0;
+                audio3.play();
+            }
+            else if(x =="boba"){
+                audio4.currentTime = 0;
+                audio4.play();
+            }
+            else if(x =="cream"){
+                audio5.currentTime = 0;
+                audio5.play();
+            }
+            else if(x =="creamsicle"){
+                audio6.currentTime = 0;
+                audio6.play();
+            }
+            else if(x =="gateron_yellow"){
+                audio7.currentTime = 0;
+                audio7.play();
+            }
+            else if(x =="l7"){
+                audio8.currentTime = 0;
+                audio8.play();
+            }
+            else if(x =="lavender"){
+                audio9.currentTime = 0;
+                audio9.play();
+            }
+            else if(x =="lilac"){
+                audio10.currentTime = 0;
+                audio10.play();
+            }
+            else if(x =="seal"){
+                audio11.currentTime = 0;
+                audio11.play();
+            }
+            else if(x =="silk_yellow"){
+                audio12.currentTime = 0;
+                audio12.play();
+            }
+            else if(x =="spstar_gray"){
+                audio13.currentTime = 0;
+                audio13.play();
+            }
+            else if(x =="tangerine"){
+                audio14.currentTime = 0;
+                audio14.play();
+            }
+            else if(x =="tealios"){
+                audio15.currentTime = 0;
+                audio15.play();
+            }
+        }
+
+    </script>
+</div>
+{% endblock content %}

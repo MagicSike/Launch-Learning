@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="login" >
+    <form method="POST" action="{{ url_for('register')}}">
+        {{ form.hidden_tag() }}
+        <div class="flex-col">
+            <div class="lg-header">
+                <h1>CREATE AN ACCOUNT</h1>
+            </div>
+    
+            <div class="lg-group">
+              {{ form.username.label(class="lg-text") }} <br>
+              {{ form.username(class="lg-input") }}
+            </div>
+
+            <div class="lg-group">
+                {{ form.email.label(class="lg-text") }} <br>
+                {{ form.email(class="lg-input") }}
+              </div>  
+    
+            <div class="lg-group">
+              {{ form.password.label(class="lg-text")}} <br>
+              {{ form.password(class="lg-input") }}
+            </div>
+
+            <div class="lg-group">
+                {{ form.confirm_password.label(class="lg-text")}} <br>
+                {{ form.confirm_password(class="lg-input") }}
+              </div>
+
+              {% with messages = get_flashed_messages() %}
+              {% if messages%}
+                  {% for message in messages %}
+                  <h3 style="color: #Cc0202"> {{ message }} </h3>
+                  {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            
+            {{ form.submit(class="btn") }}
+          </div>
+        </div>
+
+        {% if form.username.errors %}
+            {% for error in form.username.errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+
+        {% if form.email.errors %}
+            {% for error in form.email.errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+
+        {% if form.password.errors %}
+            {% for error in form.password.errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+
+        {% if form.confirm_password.errors %}
+            {% for error in form.confirm_password.errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+
+
+    </form>
+</div>
+{% endblock content %}

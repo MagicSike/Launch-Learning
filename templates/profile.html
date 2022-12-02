@@ -1,0 +1,190 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="user-profile">
+
+    <div class="lg-header">
+        <h1>Profile</h1>
+    </div>
+
+    <div class="flex-content">
+        <div class="flex-row">
+            <div class="edit-list" onclick="toggleProfile('profile1')">
+                <img src="{{ url_for('static', filename='images/icons/edit-60-64.png') }}" alt="edit-icon">
+                <b>Profile</b>
+            </div> 
+            <div class="edit-list" onclick="toggleProfile('profile2')">
+                <img src="{{ url_for('static', filename='images/icons/edit-60-64.png') }}" alt="edit-icon">
+                <b>Change Username</b>
+            </div>
+            <div class="edit-list" onclick="toggleProfile('profile3')">
+                <img src="{{ url_for('static', filename='images/icons/edit-60-64.png') }}" alt="edit-icon">
+                <b>Change Password</b>
+            </div>
+            <div class="edit-list" onclick="toggleProfile('profile4')">
+                <img src="{{ url_for('static', filename='images/icons/edit-60-64.png') }}" alt="edit-icon">
+                <b>Change Email</b>
+            </div>
+        </div>
+
+        <div class="flex-col" id = "profile1" style="display:block">
+            <div class="edit-profile">
+                <div class="profile-picture">
+                    <form method="POST" enctype=multipart/form-data action="{{ url_for('upload_file') }}">
+                        <div class="image-upload">
+                            <label for="image-input">
+                                {% if user_pic %}
+                                    <img id="previewImg" src="{{ url_for('download_file', name=user_pic) }}" alt="pic-icon">
+                                {% else %}
+                                    <img id="previewImg" src="{{ url_for('static', filename='images/icons/user-icon.png') }}" alt="pic-icon">
+                                {% endif %}
+                            </label>
+                            <input id="image-input" onchange="previewFile(this);" type="file" name="file" />
+                        </div>
+                        <input type="submit" value="Upload">
+                    </form>
+                    <div class="profile-name">
+                        <h2> {{ description['name'] }} </h2>
+                        <h2>{{ description['email']  }}</h2>
+                    </div>
+                </div>
+
+                <form method="POST" action="{{ url_for('profile')}}">
+                    {{ about_form.hidden_tag() }}
+                        <div class="lg-group">
+                            {{ about_form.about.label(class="lg-text")}} <br>
+                            {{ about_form.about(class="lg-input") }} <br>
+
+                            {% if about_form.about.errors %}
+                                {% for error in about_form.about.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                
+                        {{ about_form.submit_change(class="btn") }}
+                </form>
+            </div>
+        </div>
+
+        <div class="flex-col" id="profile2" style="display:none">
+            <div class="edit-profile">
+                <form method="POST" action="{{ url_for('profile')}}">
+                    {{ user_form.hidden_tag() }}
+                        <div class="lg-group">
+                            {{ user_form.username.label(class="lg-text") }} <br>
+                            {{ user_form.username(class="lg-input") }} <br>
+
+                            {% if user_form.username.errors %}
+                                {% for error in user_form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        {{ user_form.submit_change(class="btn") }}
+                </form>
+            </div>
+        </div>
+
+        <div class="flex-col" id="profile3" style="display:none">
+            <div class="edit-profile">
+                <form method="POST" action="{{ url_for('profile')}}">
+                    {{ pass_form.hidden_tag() }}
+                        <div class="lg-group">
+                            {{ pass_form.password.label(class="lg-text") }} <br>
+                            {{ pass_form.password(class="lg-input") }} <br>
+
+                            {% if pass_form.password.errors %}
+                                {% for error in pass_form.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="lg-group">
+                            {{ pass_form.change_password.label(class="lg-text")}} <br>
+                            {{ pass_form.change_password(class="lg-input") }} <br>
+
+                            {% if pass_form.change_password.errors %}
+                                {% for error in pass_form.change_password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        {{ pass_form.submit_change(class="btn") }}
+                </form>
+            </div>
+        </div>
+
+        <div class="flex-col" id="profile4" style="display:none">
+            <div class="edit-profile">
+                <form method="POST" action="{{ url_for('profile')}}">
+                    {{ email_form.hidden_tag() }}
+                        <div class="lg-group">
+                            {{ email_form.change_email.label(class="lg-text") }} <br>
+                            {{ email_form.change_email(class="lg-input") }} <br>
+
+                            {% if email_form.change_email.errors %}
+                                {% for error in email_form.change_email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        {{ email_form.submit_change(class="btn") }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+var coll = document.getElementsByClassName("testing-off");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+  });
+}
+</script>
+
+<script> 
+    var textarea = document.getElementById('about'); 
+    if ("{{ description['about'] }}" != "None")
+        textarea.innerHTML = "{{ description['about'] }}";
+
+</script>
+
+<script>
+    function previewFile(input){
+        var file = $("input[type=file]").get(0).files[0];
+
+        if(file){
+            var reader = new FileReader();
+
+            reader.onload = function(){
+                $("#previewImg").attr("src", reader.result);
+            }
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+<script>
+    function toggleProfile(id)
+    {
+        document.querySelectorAll(".flex-col").forEach(function(div) {
+            if (div.id == id) {
+                // Toggle specified DIV
+                div.style.display = "block";
+            } else {
+                // Hide other DIVs
+                div.style.display = "none";
+            }
+        });
+    }
+
+</script>
+{% endblock content %}

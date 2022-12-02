@@ -1,0 +1,176 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="builder-part">
+    <div class="lg-header">
+        <h1>Select {{ part_title }}</h1>
+    </div>
+    <div class="flex-content">
+        {% if page_number == 1%}
+            <div class="flex-row">
+                <div class="build-product">
+                    <form method="POST" action="{{ url_for('select', part_name=part_title) }}">
+                        <div class="checklist">
+                            Sizing:
+                            <input type="checkbox" name="size_small"> Small (20%-50%) 
+                            <input type="checkbox" name="size_medium"> Medium (60%-70%)
+                            <input type="checkbox" name="size_full"> Full (75%-100%) <br>
+                            Price:
+                            <input type="checkbox" name="low_cost"> Low (<= $100)
+                            <input type="checkbox" name="medium_cost">Medium (<= $200) 
+                            <input type="checkbox" name="high_cost"> High ($200 and up) 
+                        </div>
+                        <button class="btn-filter" type="submit" name="filter">Filter</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+        <div class="flex-row">
+            <div class="category-names">
+                <ul>
+                    {% if keep_size %}
+                        <li>MATERIAL</li>
+                        <li>SIZE</li>
+                        <li>MOUNTING </li>
+                        <li>PRICE</li>
+                    {% else %} 
+                        <li>Material</li>
+                        <li>MOUNTING</li>
+                        {% if keep_profile %}
+                            <li>Profile</li>
+                        {% endif %}
+                        <li>PRICE</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        {% if page_number == 1%}
+            {% for rec in product_recs %}
+                <div class="flex-row">
+                    <div class="build-product">
+                        <a href="{{ url_for('item_number', product_id=rec['product_id']) }}">
+                            <img src="{{ url_for('display_image', filename=rec['product_id']) }}" alt="result-image">
+                        </a>
+                        <div class="build-name">
+                            (Recommended) 
+                            {{ rec['product_name'] }}
+                        </div>
+                        <ul>
+                            {% if rec['product_material'] == "Unknown" %}
+                                <li>--</li>
+                            {% else %}
+                                <li>{{ rec['product_material'] }}</li>
+                            {% endif %}
+                            {% if keep_size %}
+                                {% if rec['product_sizing'] == "Unknown" %}
+                                    <li>--</li>
+                                {% else %}
+                                    <li>{{ rec['product_sizing'] }}</li>
+                                {% endif %}
+                            {% endif %}
+                            {% if rec['product_mount' == "Unknown"] %}
+                                <li>--</li>
+                            {% else %}
+                                <li>{{ rec['product_mount'] }}</li>
+                            {% endif %}
+                            {% if not keep_size %}
+                                {% if keep_profile %}
+                                    {% if rec['product_profile'] == "Unknown" %}
+                                        <li>--</li>
+                                    {% else %}
+                                        <li>{{ rec['product_profile'] }} </li>
+                                    {% endif %}
+                                {% else %}
+                                    <li></li>
+                                {% endif %}
+                            {% endif %}
+                            <li>${{ "%0.2f" | format(rec['product_price']) }}</li>
+                            <li>
+                                <a href="{{ url_for('set_build_part', part_type=part_title, part_number=rec['product_id']) }}">
+                                    <button class="btn-add">ADD TO BUILD</button>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% for product in products %}
+            <div class="flex-row">
+                <div class="build-product">
+                    <a href="{{ url_for('item_number', product_id=product['product_id']) }}">
+                        <img src="{{ url_for('display_image', filename=product['product_id']) }}" alt="result-image">
+                    </a>
+                    <div class="build-name">
+                        {{ product['product_name'] }}
+                    </div>
+                    <ul>
+                        {% if product['product_material'] == "Unknown" %}
+                        <li>--</li>
+                    {% else %}
+                        <li>{{ product['product_material'] }}</li>
+                    {% endif %}
+                    {% if keep_size %}
+                        {% if product['product_sizing'] == "Unknown" %}
+                            <li>--</li>
+                        {% else %}
+                            <li>{{ product['product_sizing'] }}</li>
+                        {% endif %}
+                    {% endif %}
+                    {% if product['product_mount' == "Unknown"] %}
+                        <li>--</li>
+                    {% else %}
+                        <li>{{ product['product_mount'] }}</li>
+                    {% endif %}
+                    {% if not keep_size %}
+                        {% if keep_profile %}
+                            {% if product['product_profile'] == "Unknown" %}
+                                <li>--</li>
+                            {% else %}
+                                <li>{{ product['product_profile'] }} </li>
+                            {% endif %}
+                        {% else %}
+                            <li></li>
+                        {% endif %}
+                    {% endif %}
+                        <li>${{ "%0.2f" | format(product['product_price']) }}</li>
+                        <li>
+                            <a href="{{ url_for('set_build_part', part_type=part_title, part_number=product['product_id']) }}">
+                                <button class="btn-add">ADD TO BUILD</button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>        
+        {% endfor %}
+    </div>
+    <div class="page-content">
+        <ul>
+            {% if total_pages %}
+                <li>
+                    <div class="previous-arrow">
+                        <a href="{{ previous_page }}">
+                            <img src="{{ url_for('static', filename='images/previous_arrow.png') }}" alt="previous-arrow">
+                        </a>
+                    </div>
+                </li>
+                <li></li>
+                {% for page_link in page_links %}
+                <li>
+                    <a href="{{ page_link.link }}">
+                        {{ page_link.number }}
+                    </a>
+                </li>    
+                {% endfor %}
+                <li></li>
+                <li>
+                    <div class="next-arrow">
+                        <a href="{{ next_page }}">
+                            <img src="{{ url_for('static', filename='images/next_arrow.png') }}" alt="next-arrow">
+                        </a>    
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

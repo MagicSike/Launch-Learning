@@ -1,0 +1,199 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="switch-tester">
+    <div class="lg-header">
+        <h1>Switch Tester</h1>
+    </div>
+    <div class="flex-content">
+        <div class="reminder">
+            *Headphones RECOMMENDED for better audio*
+        </div>
+        <p style="padding: 0 5em 5em 0"></p>
+        <form action="{{url_for('switchtester') }}">
+            <button class="btn-switch" type="submit"> 
+                Go back to switchtester
+            </button>
+        </form>
+
+        <p style="padding: 0 5em 5em 0"></p>
+
+        <audio id="black_ink">
+            <source src="{{url_for('static', filename='audio/black inks.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="banana_split">
+            <source src="{{url_for('static', filename='audio/bnnasplits.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="boba_linear">
+            <source src="{{url_for('static', filename='audio/boba linears.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="boba">
+            <source src="{{url_for('static', filename='audio/bobas.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="cream">
+            <source src="{{url_for('static', filename='audio/creams.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="creamsicle">
+            <source src="{{url_for('static', filename='audio/creamsicles.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="gateron_yellow">
+            <source src="{{url_for('static', filename='audio/gat yellows.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="l7">
+            <source src="{{url_for('static', filename='audio/L7.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="lavender">
+            <source src="{{url_for('static', filename='audio/lavenders.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="lilac">
+            <source src="{{url_for('static', filename='audio/lilac.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="seal">
+            <source src="{{url_for('static', filename='audio/seals.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="silk_yellow">
+            <source src="{{url_for('static', filename='audio/silk yellows.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="spstar_gray">
+            <source src="{{url_for('static', filename='audio/spstar gray.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="tangerine">
+            <source src="{{url_for('static', filename='audio/tangerines.mp3') }}" type="audio/mpeg">
+        </audio>
+
+        <audio id="tealios">
+            <source src="{{url_for('static', filename='audio/tealiosv2.mp3') }}" type="audio/mpeg">
+        </audio>
+
+
+        <div>
+
+        <button class="button-85" onclick="play1()">Black Ink</button>
+        <button class="button-85" onclick="play2()">Banana Splits</button>
+        <button class="button-85" onclick="play3()">Boba Linear</button>
+        <button class="button-85" onclick="play4()">Boba</button>
+        <button class="button-85" onclick="play5()">Cream</button>
+        <br>
+
+        <button class="button-85" onclick="play6()">Creamsicle</button>
+        <button class="button-85" onclick="play7()">Gateron Yellow</button>
+        <button class="button-85" onclick="play8()">L7</button>
+        <button class="button-85" onclick="play9()">Lavender</button>
+        <button class="button-85" onclick="play10()">Lilac</button>
+        <br>
+
+        <button class="button-85" onclick="play11()">Seal</button>
+        <button class="button-85" onclick="play12()">Silk Yellow</button>
+        <button class="button-85" onclick="play13()">Spstar Gray</button>
+        <button class="button-85" onclick="play14()">Tangerine</button>
+        <button class="button-85" onclick="play15()">Tealios V2</button>
+        <div>
+    </div>
+
+    <script>
+        var audio1 = document.getElementById("black_ink");
+        var audio2 = document.getElementById("banana_split");
+        var audio3 = document.getElementById("boba_linear");
+        var audio4 = document.getElementById("boba");
+        var audio5 = document.getElementById("cream");
+        var audio6 = document.getElementById("creamsicle");
+        var audio7 = document.getElementById("gateron_yellow");
+        var audio8 = document.getElementById("l7");
+        var audio9 = document.getElementById("lavender");
+        var audio10 = document.getElementById("lilac");
+        var audio11 = document.getElementById("seal");
+        var audio12 = document.getElementById("silk_yellow");
+        var audio13 = document.getElementById("spstar_gray");
+        var audio14 = document.getElementById("tangerine");
+        var audio15 = document.getElementById("tealios");
+
+        function play1(){
+            audio1.currentTime= 0;
+            audio1.play();
+        }
+
+        function play2(){
+            audio2.currentTime= 0;
+            audio2.play();
+        }
+
+        function play3(){
+            audio3.currentTime= 0;
+            audio3.play();
+        }
+
+        function play4(){
+            audio4.currentTime= 0;
+            audio4.play();
+        }
+
+        function play5(){
+            audio5.currentTime= 0;
+            audio5.play();
+        }
+
+        function play6(){
+            audio6.currentTime= 0;
+            audio6.play();
+        }
+
+        function play7(){
+            audio7.currentTime= 0;
+            audio7.play();
+        }
+
+        function play8(){
+            audio8.currentTime= 0;
+            audio8.play();
+        }
+
+        function play9(){
+            audio9.currentTime= 0;
+            audio9.play();
+        }
+
+        function play10(){
+            audio10.currentTime= 0;
+            audio10.play();
+        }
+
+        function play11(){
+            audio11.currentTime= 0;
+            audio11.play();
+        }
+
+        function play12(){
+            audio12.currentTime= 0;
+            audio12.play();
+        }
+
+        function play13(){
+            audio13.currentTime= 0;
+            audio13.play();
+        }
+
+        function play14(){
+            audio14.currentTime= 0;
+            audio14.play();
+        }
+
+        function play15(){
+            audio15.currentTime= 0;
+            audio15.play();
+        }
+
+    </script>
+</div>
+{% endblock content %}

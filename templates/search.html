@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="search" >
+    <div class="lg-header">
+        <form method="POST" action="{{ url_for('search') }}">
+            {{ form.hidden_tag() }}
+                <div class="lg-group">
+                    {{ form.search(class="lg-search") }}
+                    <button class="btn-search">
+                        <i class="fa fa-search"></i>
+                    </button>            
+                </div>
+
+            {% if form.search.errors %}
+                {% for error in form.search.errors %}
+                    {{ error }}
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="search-content">
+        <div class="new-line" >
+            {% if result_numbers != -1 %}
+                Results: {{ result_numbers }}
+            {% endif %}
+        </div> 
+        <hr class="new-line">
+        {% if result_numbers %}
+            {% for result in results %}
+                <div class="flex-col">
+                    <div class="search-product">
+                        <a href="{{ url_for('item_page', product_name=result['product_name']) }}">
+                            <img src="{{ url_for('display_image', filename=result['product_id']) }}" alt="result-image">
+                        </a>
+                        <ul>
+                            <li>{{ result['product_name'] }}</li>
+                            <li>${{ result['product_price'] }}</li>
+                            <li>Type: {{ result['product_type'] }}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="flex-col">
+                <div class="search-product">
+                    <img src="{{ url_for('static', filename='images/confusion.jpg') }}" alt="result-image">
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

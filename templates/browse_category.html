@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="main-browse">
+    <div class="lg-header">
+        <h1> {{ title }} </h1>
+    </div>
+
+    <div class="main-products">
+        <div class="products-header">
+            Filter - 
+            <label>
+                <select class="filter-change" name="filter-change">
+                    <option value="">Select One …</option>
+                    {% if browse == -1 %}
+                        <option value="{{ url_for('filter', filter_type='alpha_az') }}">Alphabetic: A-Z</option>
+                        <option value="{{ url_for('filter', filter_type='alpha_za') }}">Alphabetic: Z-A</option>
+                        <option value="{{ url_for('filter', filter_type='price_asc') }}">Price: Ascending</option>
+                        <option value="{{ url_for('filter', filter_type='price_desc') }}">Price: Descending</option>
+                        <option value="{{ url_for('filter', filter_type='date_asc') }}">Date Added: Ascending</option>
+                        <option value="{{ url_for('filter', filter_type='date_desc') }}">Date Added: Descending</option>
+                    {% else %}
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='alpha_az') }}">Alphabetic: A-Z</option>
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='alpha_za') }}">Alphabetic: Z-A</option>
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='price_asc') }}">Price: Ascending</option>
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='price_desc') }}">Price: Descending</option>
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='date_asc') }}">Date Added: Ascending</option>
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='date_desc') }}">Date Added: Descending</option>                    
+                    {% endif %}
+                    {% if keyboard_type %}
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='size_small') }}">Size: (20%-50%) </option>
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='size_medium') }}">Size: (60%-70%)</option>
+                        <option value="{{ url_for('category_filter', product_category=title, filter_type='size_full') }}">Size: (75%-100%) </option>  
+                    {% endif %}
+                </select>
+            </label>
+        </div> 
+        <br>
+        <div class="grid-container">
+            {% for product in product_selection %}
+            <div class="grid-item"> 
+                <a href="{{ url_for('item_page', product_name=product['product_name']) }}">
+                    <img src="{{ url_for('display_image', filename=product['product_id']) }}">
+                    <div class="product-name">
+                        {{ product['product_name'] }}
+                    </div>
+                </a>
+                <div class="price-left"> ${{ "%0.2f" | format(product['product_price']) }} </div> 
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="page-content">
+        <ul>
+            {% if total_pages %}
+                <li>
+                    <div class="previous-arrow">
+                        <a href="{{ previous_page }}">
+                            <img src="{{ url_for('static', filename='images/previous_arrow.png') }}" alt="previous-arrow">
+                        </a>
+                    </div>
+                </li>
+                <li></li>
+                {% if browse == -1 %}
+                    {% for page_link in page_links %}
+                        <li>
+                            <a href="{{ page_link.link }}">
+                                {{ page_link.number }}
+                            </a>
+                        </li>    
+                    {% endfor %}
+                {% else %}
+                    {% for page_link in page_links %}
+                    <li>
+                        <a href="{{ page_link.link }}">
+                            {{ page_link.number }}
+                        </a>
+                    </li>    
+                    {% endfor %}
+                {% endif %}
+                <li></li>
+                <li>
+                    <div class="next-arrow">
+                        <a href="{{ next_page }}">
+                            <img src="{{ url_for('static', filename='images/next_arrow.png') }}" alt="next-arrow">
+                        </a>    
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    const selectElement = document.querySelector('.filter-change');
+
+    selectElement.addEventListener('change', (event) => {
+        const result = `${event.target.value}`;
+        if (result != "")
+            window.location.replace(result);
+    });
+</script>
+{% endblock content %}

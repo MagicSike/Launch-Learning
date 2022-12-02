@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/icons/favicon.ico') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>New Page</title> 
+        {% endif %}
+        
+        {% block content_style %}
+        {% endblock %}        
+    </head>
+
+    <body>
+        <div class="sidebar-main">
+            <nav class="sidebar-left">
+                <div class="rectangle-7">
+                    <ul class="navlist">
+                        <li>
+                            <a href="{{ url_for('build') }}">
+                                <img src="/static/images/icons/hammer-icon.png" alt="hammer">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('browse') }}">
+                                <img src="/static/images/icons/profile-icon.png" alt="browse">
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('search') }}">
+                                <img src="/static/images/icons/browse-icon.png" alt="recommendation">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('community') }}">
+                                <img src="/static/images/icons/community-icon.png" alt="community">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('switchtester') }}">
+                                <img src="/static/images/icons/switch-icon.png" alt="switch">
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="logo">
+                        <div class="flex-col-index">
+                            KTG
+                            <a href="{{ url_for('index') }}">
+                                <img src="/static/images/icons/keyboard-logo.png" alt="logo">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="profile">
+                        <div class="popup" onclick="openUp()">
+                            <img src="{{ url_for('static', filename='images/icons/user-icon.png') }}" alt="user">
+                            {% if login %}
+                                <ul class="popup-text" id="popup-icons">
+                                    <a href="{{ url_for('profile') }}"> <li> Profile </li></a>
+                                    <a href="{{ url_for('user_builds') }}"> <li>My Builds</li></a>
+                                    <a href="{{ url_for('logout') }}"> <li>Logout</li></a>
+                                </ul>
+                            {% else %}
+                                <ul class="popup-text" id="popup-icons">
+                                    <a href="{{ url_for('login') }}"> <li>Login</li></a>
+                                    <a href="{{ url_for('register') }}"> <li>Register</li></a>
+                                </ul>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+        <script>
+            function openUp(){
+                var popup = document.getElementById("popup-icons")
+                popup.classList.toggle("show")
+            }
+        </script>
+    </body>  
+</html>
