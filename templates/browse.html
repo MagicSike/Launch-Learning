@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="main-browse">
+    <div class="lg-header">
+        <h1> BROWSE PRODUCTS </h1>
+    </div>
+    
+    <div class="flex-row">
+        <div class="category">
+            <a href="{{ url_for('category', product_category='Cases') }}">
+                <img src="{{ url_for('static', filename='images/categories/cases.png') }}" alt="cases">
+            </a>
+        </div>
+
+        <div class="category">
+            <a href="{{ url_for('category', product_category='PCB') }}">
+                <img src="/static/images/categories/pcb.png" alt="pcb">
+            </a>
+        </div>
+
+        <div class="category">
+            <a href="{{ url_for('category', product_category='Switches') }}">
+                <img src="/static/images/categories/switches.png" alt="switches">
+            </a>
+        </div>
+
+        <div class="category">
+            <a href="{{ url_for('category', product_category='Keycaps') }}">
+                <img src="/static/images/categories/keycaps.png" alt="keycaps">
+            </a>
+        </div>
+
+        <div class="category">
+            <a href="{{ url_for('category', product_category='Plates') }}">
+                <img src="/static/images/categories/plates.png" alt="plates">
+            </a>
+        </div>
+
+        <div class="category">
+            <a href="{{ url_for('category', product_category='Keyboards') }}">
+                <img src="/static/images/categories/kits.png" alt="kits">
+            </a>
+        </div>
+    </div>
+
+    <div class="main-products">
+        <div class="products-header">
+            ALL PRODUCTS - 
+            <label>
+                <select class="filter-change" name="filter-change">
+                    <option value="">Select One …</option>
+                    <option value="{{ url_for('filter', filter_type='alpha_az') }}">Alphabetic: A-Z</option>
+                    <option value="{{ url_for('filter', filter_type='alpha_za') }}">Alphabetic: Z-A</option>
+                    <option value="{{ url_for('filter', filter_type='price_asc') }}">Price: Ascending</option>
+                    <option value="{{ url_for('filter', filter_type='price_desc') }}">Price: Descending</option>
+                    <option value="{{ url_for('filter', filter_type='date_asc') }}">Date Added: Ascending</option>
+                    <option value="{{ url_for('filter', filter_type='date_desc') }}">Date Added: Descending</option>
+                </select>
+            </label>
+        </div> 
+        <br>
+        <div class="grid-container">
+            {% for data in datas %}
+                <div class="grid-item"> 
+                    <a href="{{ url_for('item_page', product_name=data['product_name']) }}">
+                        <img src="{{ url_for('display_image', filename=data['product_id']) }}">
+                        <div class="product-name">
+                            {{ data['product_name'] }}
+                        </div>
+                    </a>
+                    <div class="price-left"> ${{ "%0.2f" | format(data['product_price']) }} </div> 
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="page-content">
+        <ul>
+            {% if total_pages %}
+                <li>
+                    <div class="previous-arrow">
+                        <a href="{{ previous_page }}">
+                            <img src="{{ url_for('static', filename='images/previous_arrow.png') }}" alt="previous-arrow">
+                        </a>
+                    </div>
+                </li>
+                <li></li>
+                {% for page_link in page_links %}
+                <li>
+                    <a href="{{ page_link.link }}">
+                        {{ page_link.number }}
+                    </a>
+                </li>    
+                {% endfor %}
+                <li></li>
+                <li>
+                    <div class="next-arrow">
+                        <a href="{{ next_page }}">
+                            <img src="{{ url_for('static', filename='images/next_arrow.png') }}" alt="next-arrow">
+                        </a>    
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    const selectElement = document.querySelector('.filter-change');
+
+    selectElement.addEventListener('change', (event) => {
+        const result = `${event.target.value}`;
+        window.location.replace(result);
+    });
+</script>
+{% endblock content %}
