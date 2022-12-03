@@ -1377,7 +1377,7 @@ def user():
     print(form.validate_on_submit())
     if "user" in session and form.validate_on_submit:
         #user = session["user"]
-        flash('You were successfully logged in', SUCCESS)
+        #flash('You were successfully logged in', SUCCESS)
         return redirect(url_for('index'))
     else:
         return redirect(url_for("login"))    
@@ -1385,7 +1385,7 @@ def user():
 @app.route("/logout")
 def logout():
     session.pop("user", None)
-    print("User logged out")
+    flash("User logged out", SUCCESS)
     return redirect(url_for("login"))    
 
 ####################### LOGIN/Register BLOCK END #######################
