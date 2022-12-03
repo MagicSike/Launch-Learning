@@ -2,8 +2,8 @@
 
 # Base Flask configurations
 TESTING = True
-DEBUG = True
-FLASK_ENV = 'development'
+DEBUG = False
+FLASK_ENV = 'production'
 SECRET_KEY = '5791628bb0b13ce0c676dfde280ba245'
 
 UPLOAD_FOLDER = 'static/upload_folder/'
